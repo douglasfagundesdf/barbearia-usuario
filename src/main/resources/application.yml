@@ -1,0 +1,6 @@
+server:
+  port: 7600
+
+spring:
+  application:
+    name: barbearia-usuario-service
