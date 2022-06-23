@@ -4,3 +4,21 @@ server:
 spring:
   application:
     name: barbearia-usuario-service
+  
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_BARBEARIA_USUARIO_URL}
+    username: ${MYSQL_BARBEARIA_USUARIO_USERNAME}
+    password: ${MYSQL_BARBEARIA_USUARIO_PASSWORD}
+  
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+  
+  flyway:
+    url: ${MYSQL_BARBEARIA_USUARIO_URL}
+    user: ${MYSQL_BARBEARIA_USUARIO_USERNAME}
+    password: ${MYSQL_BARBEARIA_USUARIO_PASSWORD}
