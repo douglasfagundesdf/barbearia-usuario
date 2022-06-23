@@ -6,5 +6,6 @@ CREATE TABLE users (
 	birth_date date not null,
 	email varchar(120) not null,
 	created_at timestamp,
-	modified_at timestamp
+	modified_at timestamp,
+	version int not null
 );

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,5 +29,9 @@ public abstract class BaseEntity {
 	
 	@CreationTimestamp
 	private LocalDateTime modifiedAt;
+	
+	@Column(nullable = false)
+	@Version
+	private Long version;
 	
 }
