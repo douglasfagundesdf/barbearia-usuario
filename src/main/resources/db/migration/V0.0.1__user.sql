@@ -3,6 +3,8 @@ CREATE TABLE users (
 	name varchar(80) not null,
 	lastname varchar(80) not null,
 	nickname varchar(80),
-	age INT(3) not null,
-	created_date timestamp
+	birth_date date not null,
+	email varchar(120) not null,
+	created_at timestamp,
+	modified_at timestamp
 );

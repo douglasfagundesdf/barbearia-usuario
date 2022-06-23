@@ -24,4 +24,10 @@ spring:
     url: ${MYSQL_BARBEARIA_USUARIO_URL}
     user: ${MYSQL_BARBEARIA_USUARIO_USERNAME}
     password: ${MYSQL_BARBEARIA_USUARIO_PASSWORD}
+  
+  jackson:
+    default-property-inclusion: non-null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: America/Sao_Paulo
+      
 

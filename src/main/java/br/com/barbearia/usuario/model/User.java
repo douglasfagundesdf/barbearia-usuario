@@ -3,9 +3,6 @@ package br.com.barbearia.usuario.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -15,11 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity (name = "users")
-public class User {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class User extends BaseEntity {
 	
 	private String name;
 	
@@ -27,9 +20,9 @@ public class User {
 	
 	private String nickname;
 	
-	private Integer age;
+	@Temporal(TemporalType.DATE)
+	private Date birthDate;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+	private String email;
 	
 }
