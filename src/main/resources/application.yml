@@ -1,5 +1,7 @@
 server:
   port: 7600
+  servlet:
+    context-path: /api/v1
 
 spring:
   application:
@@ -22,3 +24,4 @@ spring:
     url: ${MYSQL_BARBEARIA_USUARIO_URL}
     user: ${MYSQL_BARBEARIA_USUARIO_USERNAME}
     password: ${MYSQL_BARBEARIA_USUARIO_PASSWORD}
+
