@@ -1,6 +1,8 @@
-package br.com.barbearia.usuario.api.dto;
+package com.barbershop.user.api.dto;
 
 import java.util.Date;
+
+import com.barbershop.api.BaseDto;
 
 import lombok.Getter;
 import lombok.Setter;

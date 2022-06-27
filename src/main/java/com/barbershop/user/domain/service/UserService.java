@@ -1,4 +1,4 @@
-package br.com.barbearia.usuario.service;
+package com.barbershop.user.domain.service;
 
 import java.util.Optional;
 
@@ -6,10 +6,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.barbearia.usuario.api.dto.UserDto;
-import br.com.barbearia.usuario.api.dto.UserIncomingDto;
-import br.com.barbearia.usuario.model.User;
-import br.com.barbearia.usuario.repository.UserRepository;
+import com.barbershop.user.api.dto.UserCreateDto;
+import com.barbershop.user.api.dto.UserDto;
+import com.barbershop.user.domain.model.User;
+import com.barbershop.user.domain.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -19,7 +19,7 @@ public class UserService {
 	
 	private ModelMapper modelMapper = new ModelMapper();
 	
-	public Long create(UserIncomingDto userIncomingDto) {
+	public Long create(UserCreateDto userIncomingDto) {
 		User user = modelMapper.map(userIncomingDto, User.class);
 		
 		if (user.getNickname() == null)

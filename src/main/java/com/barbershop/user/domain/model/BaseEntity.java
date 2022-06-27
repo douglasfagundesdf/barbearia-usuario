@@ -1,4 +1,4 @@
-package br.com.barbearia.usuario.model;
+package com.barbershop.user.domain.model;
 
 import java.time.LocalDateTime;
 

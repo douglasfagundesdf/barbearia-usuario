@@ -1,13 +1,13 @@
-package br.com.barbearia.usuario;
+package com.barbershop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UsuarioApplication {
+public class UserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UsuarioApplication.class, args);
+		SpringApplication.run(UserApplication.class, args);
 	}
 
 }

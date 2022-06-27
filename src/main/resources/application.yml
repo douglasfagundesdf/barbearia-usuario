@@ -5,13 +5,13 @@ server:
 
 spring:
   application:
-    name: barbearia-usuario-service
+    name: barbershop-user-service
   
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_BARBEARIA_USUARIO_URL}
-    username: ${MYSQL_BARBEARIA_USUARIO_USERNAME}
-    password: ${MYSQL_BARBEARIA_USUARIO_PASSWORD}
+    url: ${MYSQL_BARBERSHOP_USER_URL}
+    username: ${MYSQL_BARBERSHOP_USER_USERNAME}
+    password: ${MYSQL_BARBERSHOP_USER_PASSWORD}
   
   jpa:
     hibernate:
@@ -21,13 +21,13 @@ spring:
         dialect: org.hibernate.dialect.MySQL57Dialect
   
   flyway:
-    url: ${MYSQL_BARBEARIA_USUARIO_URL}
-    user: ${MYSQL_BARBEARIA_USUARIO_USERNAME}
-    password: ${MYSQL_BARBEARIA_USUARIO_PASSWORD}
+    url: ${MYSQL_BARBERSHOP_USER_URL}
+    user: ${MYSQL_BARBERSHOP_USER_USERNAME}
+    password: ${MYSQL_BARBERSHOP_USER_PASSWORD}
   
   jackson:
     default-property-inclusion: non-null
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: America/Sao_Paulo
-      
+    
 

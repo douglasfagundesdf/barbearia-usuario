@@ -1,4 +1,4 @@
-package br.com.barbearia.usuario.api.dto;
+package com.barbershop.api;
 
 import lombok.Getter;
 

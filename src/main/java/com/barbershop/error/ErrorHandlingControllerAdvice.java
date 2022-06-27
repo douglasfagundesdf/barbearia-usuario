@@ -1,4 +1,4 @@
-package br.com.barbearia.usuario.error;
+package com.barbershop.error;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;

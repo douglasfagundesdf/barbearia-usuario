@@ -1,4 +1,4 @@
-package br.com.barbearia.usuario.api;
+package com.barbershop.user.api;
 
 import java.util.Optional;
 
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.barbearia.usuario.api.dto.ResponseIdDto;
-import br.com.barbearia.usuario.api.dto.UserDto;
-import br.com.barbearia.usuario.api.dto.UserIncomingDto;
-import br.com.barbearia.usuario.service.UserService;
+import com.barbershop.api.ResponseIdDto;
+import com.barbershop.user.api.dto.UserCreateDto;
+import com.barbershop.user.api.dto.UserDto;
+import com.barbershop.user.domain.service.UserService;
 
 @RestController
 @RequestMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,7 +38,7 @@ public class UserController {
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseIdDto<Long>> create(@Valid @RequestBody UserIncomingDto userIncomingDto) {
+	public ResponseEntity<ResponseIdDto<Long>> create(@Valid @RequestBody UserCreateDto userIncomingDto) {
 		Long id = service.create(userIncomingDto);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseIdDto<>(id));

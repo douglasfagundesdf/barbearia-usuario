@@ -1,4 +1,4 @@
-package br.com.barbearia.usuario.api.dto;
+package com.barbershop.user.api.dto;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserIncomingDto {
+public class UserCreateDto {
 	
 	@NotEmpty
 	@Size(min = 1, max = 80)

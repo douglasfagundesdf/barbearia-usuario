@@ -1,4 +1,4 @@
-package br.com.barbearia.usuario.error;
+package com.barbershop.error;
 
 import lombok.Getter;
 

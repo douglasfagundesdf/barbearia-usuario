@@ -1,4 +1,4 @@
-package br.com.barbearia.usuario.error;
+package com.barbershop.error;
 
 import java.util.ArrayList;
 import java.util.List;
