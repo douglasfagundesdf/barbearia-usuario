@@ -29,10 +29,9 @@ public class UserService {
 	public Long create(UserCreateDto dto) {
 		User user = modelMapper.map(dto, User.class);
 		
-		validateExistenteUser(user);
+		validateExistingUser(user);
 		
-		if (user.getNickname() == null)
-			user.setNickname(user.getName());
+		fillNicknameWhenNotInformed(user);
 		
 		repository.save(user);
 		
@@ -71,12 +70,17 @@ public class UserService {
 		return repository.findById(id);
 	}
 	
-	private void validateExistenteUser(User user) {
+	private void validateExistingUser(User user) {
 		Optional<User> userWithEmail = repository.findByEmail(user.getEmail());
 		
 		if (userWithEmail.isPresent()) {
 			throw new BarberShopException("Já existe um usuário cadastrado para o e-mail {0}.", user.getEmail());
 		}
+	}
+	
+	private void fillNicknameWhenNotInformed(User user) {
+		if (user.getNickname() == null)
+			user.setNickname(user.getName());
 	}
 	
 }
