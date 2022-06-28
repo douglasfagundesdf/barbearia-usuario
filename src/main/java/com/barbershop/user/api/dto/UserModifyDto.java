@@ -2,7 +2,6 @@ package com.barbershop.user.api.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserCreateDto {
+public class UserModifyDto {
 	
 	@NotEmpty
 	@Size(min = 1, max = 80)
@@ -27,9 +26,5 @@ public class UserCreateDto {
 	
 	@NotNull
 	private Date birthDate;
-	
-	@NotEmpty
-	@Email
-	private String email;
 	
 }

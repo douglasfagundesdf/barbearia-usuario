@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.barbershop.api.ResponseIdDto;
 import com.barbershop.user.api.dto.UserCreateDto;
 import com.barbershop.user.api.dto.UserDto;
+import com.barbershop.user.api.dto.UserModifyDto;
 import com.barbershop.user.domain.service.UserService;
 
 @RestController
@@ -44,11 +46,18 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseIdDto<>(id));
 	}
 	
+	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody UserModifyDto userModifyDto) {
+		if (service.update(id, userModifyDto)) {
+			return ResponseEntity.noContent().build();
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		boolean deleted = service.delete(id);
-		
-		if (deleted) {
+		if (service.delete(id)) {
 			return ResponseEntity.ok().build();
 		}
 		

@@ -30,7 +30,7 @@ public class ErrorHandlingControllerAdvice {
 	@ResponseBody
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	ValidationErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+	public ValidationErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		ValidationErrorResponse error = new ValidationErrorResponse();
 		
 		for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
@@ -38,6 +38,13 @@ public class ErrorHandlingControllerAdvice {
 		}
 		
 		return error;
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(BarberShopException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDto onDomainLogicError(BarberShopException e) {
+		return new ErrorDto(e.getMessage());
 	}
 	
 }
