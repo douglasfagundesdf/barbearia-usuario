@@ -43,8 +43,15 @@ public class ErrorHandlingControllerAdvice {
 	@ResponseBody
 	@ExceptionHandler(BarberShopException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorDto onDomainLogicError(BarberShopException e) {
+	public ErrorDto onDomainLogicException(BarberShopException e) {
 		return new ErrorDto(e.getMessage());
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(BarberShopNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public void onNotFoundException(BarberShopNotFoundException e) {
+		
 	}
 	
 }
