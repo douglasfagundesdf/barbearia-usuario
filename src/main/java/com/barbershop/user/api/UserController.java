@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.barbershop.api.ResponseIdDto;
-import com.barbershop.user.api.dto.UserCreateDto;
-import com.barbershop.user.api.dto.UserDto;
-import com.barbershop.user.api.dto.UserModifyDto;
+import com.barbershop.user.domain.dto.UserCreateDto;
+import com.barbershop.user.domain.dto.UserDto;
+import com.barbershop.user.domain.dto.UserModifyDto;
 import com.barbershop.user.domain.service.UserService;
 
 @RestController

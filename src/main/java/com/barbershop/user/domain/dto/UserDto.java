@@ -1,4 +1,4 @@
-package com.barbershop.user.api.dto;
+package com.barbershop.user.domain.dto;
 
 import java.util.Date;
 

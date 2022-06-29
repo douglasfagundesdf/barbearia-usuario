@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.barbershop.error.BarberShopException;
-import com.barbershop.user.api.dto.UserCreateDto;
+import com.barbershop.user.domain.dto.UserCreateDto;
 import com.barbershop.user.domain.model.User;
 import com.barbershop.user.domain.repository.UserRepository;
 
@@ -69,8 +69,8 @@ class UserServiceTest {
 	}
 	
 	@Test
-	@DisplayName("On create keep nickname when informed")
-	void onCreateKeepNicknameWhenInfomed() {
+	@DisplayName("On create keep nickname when informed and the others fields")
+	void onCreateKeepNicknameWhenInfomedAndOthersFields() {
 		UserCreateDto dto = new UserCreateDto();
 		dto.setBirthDate(new Date());
 		dto.setEmail("user.name@user.com");
@@ -89,6 +89,10 @@ class UserServiceTest {
 		User user = captor.getValue();
 		
 		assertThat(user.getNickname()).isEqualTo(dto.getNickname());
+		assertThat(user.getBirthDate()).isEqualTo(dto.getBirthDate());
+		assertThat(user.getEmail()).isEqualTo(dto.getEmail());
+		assertThat(user.getLastname()).isEqualTo(dto.getLastname());
+		assertThat(user.getName()).isEqualTo(dto.getName());
 	}
 	
 }

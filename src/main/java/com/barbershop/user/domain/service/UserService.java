@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.barbershop.error.BarberShopException;
-import com.barbershop.user.api.dto.UserCreateDto;
-import com.barbershop.user.api.dto.UserDto;
-import com.barbershop.user.api.dto.UserModifyDto;
+import com.barbershop.user.domain.dto.UserCreateDto;
+import com.barbershop.user.domain.dto.UserDto;
+import com.barbershop.user.domain.dto.UserModifyDto;
 import com.barbershop.user.domain.model.User;
 import com.barbershop.user.domain.repository.UserRepository;
 
