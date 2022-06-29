@@ -17,7 +17,9 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.barbershop.error.BarberShopException;
+import com.barbershop.error.BarberShopNotFoundException;
 import com.barbershop.user.domain.dto.UserCreateDto;
+import com.barbershop.user.domain.dto.UserDto;
 import com.barbershop.user.domain.model.User;
 import com.barbershop.user.domain.repository.UserRepository;
 
@@ -29,6 +31,41 @@ class UserServiceTest {
 	
 	@InjectMocks
 	private UserService service;
+	
+	@Test
+	@DisplayName("Error when getting a non-existent user")
+	void errorWhenGetNonExistentUser() {
+		Long userId = 14L;
+		
+		doReturn(Optional.empty()).when(repository).findById(userId);
+		
+		assertThrows(BarberShopNotFoundException.class, () -> service.findById(userId));
+	}
+	
+	@Test
+	@DisplayName("On get user returns information about existing user")
+	void onGetUserReturnInformationAboutExistingUser() {
+		Long userId = 14L;
+		
+		User user = new User();
+		user.setBirthDate(new Date());
+		user.setEmail("user.name@user.com");
+		user.setId(userId);
+		user.setLastname("Name");
+		user.setName("User");
+		user.setNickname("us");
+		
+		doReturn(Optional.of(user)).when(repository).findById(userId);
+		
+		UserDto userDto = service.findById(userId);
+		
+		assertThat(userDto.getBirthDate()).isEqualTo(user.getBirthDate());
+		assertThat(userDto.getEmail()).isEqualTo(user.getEmail());
+		assertThat(userDto.getId()).isEqualTo(user.getId());
+		assertThat(userDto.getLastname()).isEqualTo(user.getLastname());
+		assertThat(userDto.getName()).isEqualTo(user.getName());
+		assertThat(userDto.getNickname()).isEqualTo(user.getNickname());
+	}
 	
 	@Test
 	@DisplayName("Error when creating a user with an already existing email")
@@ -94,5 +131,7 @@ class UserServiceTest {
 		assertThat(user.getLastname()).isEqualTo(dto.getLastname());
 		assertThat(user.getName()).isEqualTo(dto.getName());
 	}
+	
+	
 	
 }

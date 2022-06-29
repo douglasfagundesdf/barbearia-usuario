@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.barbershop.error.BarberShopException;
+import com.barbershop.error.BarberShopNotFoundException;
 import com.barbershop.user.domain.dto.UserCreateDto;
 import com.barbershop.user.domain.dto.UserDto;
 import com.barbershop.user.domain.dto.UserModifyDto;
@@ -21,9 +22,10 @@ public class UserService {
 	
 	private ModelMapper modelMapper = new ModelMapper();
 	
-	public Optional<UserDto> findById(Long id) {
+	public UserDto findById(Long id) {
 		return findUserById(id)
-				.map(user -> modelMapper.map(user, UserDto.class));
+				.map(user -> modelMapper.map(user, UserDto.class))
+				.orElseThrow(() -> new BarberShopNotFoundException("User not found to id {0}", id));
 	}
 	
 	public Long create(UserCreateDto dto) {

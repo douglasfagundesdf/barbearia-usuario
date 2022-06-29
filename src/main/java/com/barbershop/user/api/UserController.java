@@ -1,7 +1,5 @@
 package com.barbershop.user.api;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +30,9 @@ public class UserController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<UserDto> findById(@PathVariable("id") Long id) {
-		Optional<UserDto> user = service.findById(id);
+		UserDto user = service.findById(id);
 		
-		return user
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+		return ResponseEntity.ok(user);
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -10,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public abstract class BaseEntity {
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 	
-	@CreationTimestamp
+	@UpdateTimestamp
 	private LocalDateTime modifiedAt;
 	
 	@Column(nullable = false)
