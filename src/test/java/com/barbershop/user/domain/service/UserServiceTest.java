@@ -9,6 +9,9 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.validation.ConstraintViolationException;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -20,10 +23,14 @@ import com.barbershop.error.BarberShopException;
 import com.barbershop.error.BarberShopNotFoundException;
 import com.barbershop.user.domain.dto.UserCreateDto;
 import com.barbershop.user.domain.dto.UserDto;
+import com.barbershop.user.domain.dto.UserModifyDto;
 import com.barbershop.user.domain.model.User;
 import com.barbershop.user.domain.repository.UserRepository;
 
 @SpringJUnitConfig
+//@Configuration
+//@ImportAutoConfiguration(ValidationAutoConfiguration.class)
+//@ContextConfiguration(classes =  ValidationAutoConfiguration.class)
 class UserServiceTest {
 	
 	@Mock
@@ -84,6 +91,18 @@ class UserServiceTest {
 	}
 	
 	@Test
+	@DisplayName("Error when creating a user without inform birth date")
+	@Disabled("Temporarily disabled until i find a solution to test @valid")
+	void errorWhenCreateUserWithoutInformBirthdate() {
+		UserCreateDto dto = new UserCreateDto();
+		dto.setEmail("user.name@user.com");
+		dto.setLastname("Name");
+		dto.setName("User");
+		
+		assertThrows(ConstraintViolationException.class, () -> service.create(dto));
+	}
+	
+	@Test
 	@DisplayName("On create fill in the nickname with the name when not informed")
 	void onCreateFillNicknameWithNameWhenNotInfomed() {
 		UserCreateDto dto = new UserCreateDto();
@@ -132,6 +151,21 @@ class UserServiceTest {
 		assertThat(user.getName()).isEqualTo(dto.getName());
 	}
 	
+	@Test
+	@DisplayName("Error when update a non-existent user")
+	void errorWhenUpdateNonExistentUser() {
+		Long userId = 14L;
+		
+		UserModifyDto dto = new UserModifyDto();
+		dto.setBirthDate(new Date());
+		dto.setLastname("Name");
+		dto.setName("User");
+		dto.setNickname("UNme");
+		
+		doReturn(Optional.empty()).when(repository).findById(userId);
+		
+		assertThrows(BarberShopNotFoundException.class, () -> service.update(userId, dto));
+	}
 	
 	
 }

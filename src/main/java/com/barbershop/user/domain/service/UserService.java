@@ -2,6 +2,8 @@ package com.barbershop.user.domain.service;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +27,10 @@ public class UserService {
 	public UserDto findById(Long id) {
 		return findUserById(id)
 				.map(user -> modelMapper.map(user, UserDto.class))
-				.orElseThrow(() -> new BarberShopNotFoundException("User not found to id {0}", id));
+				.orElseThrow(() -> userNotFoundException(id));
 	}
 	
-	public Long create(UserCreateDto dto) {
+	public Long create(@Valid UserCreateDto dto) {
 		User user = modelMapper.map(dto, User.class);
 		
 		validateExistingUser(user);
@@ -40,20 +42,13 @@ public class UserService {
 		return user.getId();
 	}
 	
-	public boolean update(Long id, UserModifyDto dto) {
-		Optional<User> optionalUser = findUserById(id);
+	public void update(Long id, @Valid UserModifyDto dto) {
+		User user = findUserById(id)
+				.orElseThrow(() -> userNotFoundException(id));
 		
-		if (optionalUser.isPresent()) {
-			User user = optionalUser.get();
-			
-			modelMapper.map(dto, user);
-			
-			repository.save(user);
-			
-			return true;
-		}
+		modelMapper.map(dto, user);
 		
-		return false;
+		repository.save(user);
 	}
 	
 	public boolean delete(Long id) {
@@ -83,6 +78,10 @@ public class UserService {
 	private void fillNicknameWhenNotInformed(User user) {
 		if (user.getNickname() == null)
 			user.setNickname(user.getName());
+	}
+	
+	private BarberShopNotFoundException userNotFoundException(Long id) {
+		return new BarberShopNotFoundException("User not found to id {0}", id);
 	}
 	
 }

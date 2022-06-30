@@ -1,7 +1,5 @@
 package com.barbershop.user.api;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,19 +34,17 @@ public class UserController {
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseIdDto<Long>> create(@Valid @RequestBody UserCreateDto userIncomingDto) {
+	public ResponseEntity<ResponseIdDto<Long>> create(@RequestBody UserCreateDto userIncomingDto) {
 		Long id = service.create(userIncomingDto);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseIdDto<>(id));
 	}
 	
 	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody UserModifyDto userModifyDto) {
-		if (service.update(id, userModifyDto)) {
-			return ResponseEntity.noContent().build();
-		}
+	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody UserModifyDto userModifyDto) {
+		service.update(id, userModifyDto);
 		
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping("/{id}")
