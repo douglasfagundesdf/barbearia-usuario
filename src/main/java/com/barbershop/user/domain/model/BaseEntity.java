@@ -12,12 +12,14 @@ import javax.persistence.Version;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @MappedSuperclass
 @Getter
 @Setter
+@EqualsAndHashCode
 public abstract class BaseEntity {
 	
 	@Id

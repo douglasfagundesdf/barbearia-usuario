@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.barbershop.error.BarberShopException;
@@ -23,6 +25,12 @@ public class UserService {
 	private UserRepository repository;
 	
 	private ModelMapper modelMapper = new ModelMapper();
+	
+	public Page<UserDto> findAll(Pageable pageable) {
+		Page<User> page = repository.findAll(pageable);
+		
+		return page.map(user -> modelMapper.map(user, UserDto.class));
+	}
 	
 	public UserDto findById(Long id) {
 		return findUserById(id)

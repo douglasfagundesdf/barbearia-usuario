@@ -1,6 +1,8 @@
 package com.barbershop.user.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,13 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+	
+	@GetMapping
+	public ResponseEntity<Page<UserDto>> findAll(Pageable pageable) {
+		Page<UserDto> page = service.findAll(pageable);
+		
+		return ResponseEntity.ok(page);
+	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<UserDto> findById(@PathVariable("id") Long id) {
