@@ -6,6 +6,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -87,7 +89,7 @@ class UserServiceTest {
 		
 		BarberShopException exception = assertThrows(BarberShopException.class, () -> service.create(dto));
 		
-		assertThat(exception.getMessage()).isEqualTo(MessageFormat.format("Já existe um usuário cadastrado para o e-mail {0}.", dto.getEmail()));
+		assertThat(exception.getMessage()).isEqualTo(MessageFormat.format("There is already a user registered for the email {0}.", dto.getEmail()));
 	}
 	
 	@Test
@@ -167,5 +169,77 @@ class UserServiceTest {
 		assertThrows(BarberShopNotFoundException.class, () -> service.update(userId, dto));
 	}
 	
+	@Test
+	@DisplayName("On update keep the informed fields and don't change others")
+	void onUpdateKeepAllInformadFieldsAndDontChangeOthers() throws ParseException {
+		Long userId = 14L;
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		User user = new User();
+		user.setBirthDate(dateFormat.parse("01/01/2000"));
+		user.setEmail("user.name@email.com");
+		user.setId(userId);
+		user.setLastname("Name");
+		user.setName("User");
+		user.setNickname("Us");
+		
+		doReturn(Optional.of(user)).when(repository).findById(userId);
+		
+		UserModifyDto dto = new UserModifyDto();
+		dto.setBirthDate(dateFormat.parse("15/06/2001"));
+		dto.setLastname("Sedrick");
+		dto.setName("Jhon");
+		dto.setNickname("Jhon");
+		
+		service.update(userId, dto);
+		
+		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+		
+		verify(repository).save(userCaptor.capture());
+		
+		User alteredUser = userCaptor.getValue();
+		
+		assertThat(alteredUser.getBirthDate()).isEqualTo(dto.getBirthDate());
+		assertThat(alteredUser.getEmail()).isEqualTo(user.getEmail());
+		assertThat(alteredUser.getLastname()).isEqualTo(dto.getLastname());
+		assertThat(alteredUser.getName()).isEqualTo(dto.getName());
+		assertThat(alteredUser.getNickname()).isEqualTo(dto.getNickname());
+		assertThat(alteredUser.getId()).isEqualTo(user.getId());
+	}
+	
+	@Test
+	@DisplayName("Error when delete a non-existent user")
+	void errorWhenDeleteNonExistentUser() {
+		Long userId = 14L;
+		
+		doReturn(Optional.empty()).when(repository).findById(userId);
+		
+		assertThrows(BarberShopNotFoundException.class, () -> service.delete(userId));
+	}
+	
+	@Test
+	@DisplayName("On delete remove a existent user")
+	void onDeleteRemoveExistentUser() {
+		Long userId = 14L;
+		
+		User user = new User();
+		user.setBirthDate(new Date());
+		user.setEmail("user.name@email.com");
+		user.setId(userId);
+		user.setLastname("Name");
+		user.setName("User");
+		user.setNickname("Us");
+		
+		doReturn(Optional.of(user)).when(repository).findById(userId);
+		
+		service.delete(userId);
+		
+		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+		
+		verify(repository).delete(userCaptor.capture());
+		
+		assertThat(userCaptor.getValue()).isEqualTo(user);
+	}
 	
 }

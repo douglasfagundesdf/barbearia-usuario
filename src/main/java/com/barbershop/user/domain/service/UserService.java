@@ -51,16 +51,11 @@ public class UserService {
 		repository.save(user);
 	}
 	
-	public boolean delete(Long id) {
-		Optional<User> user = findUserById(id);
+	public void delete(Long id) {
+		User user = findUserById(id)
+				.orElseThrow(() -> userNotFoundException(id));
 		
-		if (user.isPresent()) {
-			repository.delete(user.get());
-			
-			return true;
-		}
-		
-		return false;
+		repository.delete(user);
 	}
 	
 	private Optional<User> findUserById(Long id) {
@@ -71,7 +66,7 @@ public class UserService {
 		Optional<User> userWithEmail = repository.findByEmail(user.getEmail());
 		
 		if (userWithEmail.isPresent()) {
-			throw new BarberShopException("Já existe um usuário cadastrado para o e-mail {0}.", user.getEmail());
+			throw new BarberShopException("There is already a user registered for the email {0}.", user.getEmail());
 		}
 	}
 	
